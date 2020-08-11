@@ -1,7 +1,7 @@
 #Multi-stage build
 
 #Stage 1
-FROM maven:3.6-jdk-11 as build
+FROM maven:3.6-jdk-8 as build
 
 WORKDIR /build
 
@@ -15,12 +15,12 @@ COPY src /build/src/
 RUN mvn package
 
 #Stage 2
-FROM openjdk:11-slim
+FROM openjdk:8-alpine
 
 WORKDIR /target
 COPY --from=build /build/target /target
 
-RUN useradd -m serve && \
+RUN adduser -D serve && \
     chown -R serve /target
 
 USER serve
