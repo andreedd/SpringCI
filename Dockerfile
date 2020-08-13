@@ -12,7 +12,7 @@ RUN mvn dependency:go-offline
 
 COPY src /build/src/
 
-RUN mvn package
+RUN mvn package -DskipTests
 
 #Stage 2
 FROM openjdk:8-alpine
@@ -26,6 +26,3 @@ RUN adduser -D serve && \
 USER serve
 
 EXPOSE 8080
-
-ENTRYPOINT ["java"]
-CMD ["-jar", "./dockerci-0.0.1-SNAPSHOT.jar"]

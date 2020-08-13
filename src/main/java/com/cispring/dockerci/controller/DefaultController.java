@@ -1,5 +1,4 @@
-
-package com.cispring.dockerci;
+package com.cispring.dockerci.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 public class DefaultController {
     
-	@RequestMapping("/welcome")
+	@RequestMapping("/")
 	public String helloWorld() {
  
 		return "Hello world";
