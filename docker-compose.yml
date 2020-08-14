@@ -2,9 +2,9 @@ version: '3.5'
 
 services:
 
-  app:
-    image: ddeeh/springci
-    #build: .
+  backend:
+    #: ddeeh/springci
+    build: .
     ports:
       - 8080:8080
     depends_on:
@@ -12,6 +12,17 @@ services:
     command: ["java", "-jar", "./dockerci-0.0.1-SNAPSHOT.jar"]
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+
+  frontend:
+    build:
+      context: https://github.com/andreedd/ReactCI.git
+      dockerfile: Dockerfile.prod
+    working_dir: /app
+    ports:
+      - "3000:80"
+    stdin_open: true
+    depends_on:
+      - backend
 
   db:
     image: postgres
@@ -31,11 +42,11 @@ services:
     depends_on:
       - db
 
-  watchtower:
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: watchtower
+#  watchtower:
+#    image: containrrr/watchtower
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    container_name: watchtower
 
 volumes:
   pgdata:
